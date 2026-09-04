@@ -35,3 +35,5 @@ Thumbs.db
 # Celery
 celerybeat-schedule
 celerybeat-schedule.*
+
+config/config.env
