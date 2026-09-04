@@ -1,0 +1,73 @@
+{% extends 'subscriptions/main.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+
+<section class="home-hero">
+
+    <div class="home-mark">S</div>
+
+    <h1>Welcome back, {{ request.user.username }}.</h1>
+
+    <p>
+        Keep track of your subscriptions and stay on top
+        of your upcoming payments.
+    </p>
+
+    <a href="{% url 'dashboard' %}" class="home-button">
+        Go to Dashboard
+    </a>
+
+</section>
+
+{% else %}
+
+<section class="home-hero">
+
+    <div class="home-mark">S</div>
+
+    <h1>Take control of your subscriptions.</h1>
+
+    <p>
+        Keep track of what you pay for, when you're charged,
+        and how much you're spending.
+    </p>
+
+    <div class="home-actions">
+        <a href="{% url 'signup' %}" class="home-button">
+            Get Started
+        </a>
+
+        <a href="{% url 'login' %}" class="home-signin">
+            Sign In
+        </a>
+    </div>
+
+</section>
+
+<section class="home-features">
+
+    <div class="home-feature">
+        <span>01</span>
+        <h2>Track</h2>
+        <p>Keep your subscriptions organised in one place.</p>
+    </div>
+
+    <div class="home-feature">
+        <span>02</span>
+        <h2>Stay ahead</h2>
+        <p>Know when your next payments are coming.</p>
+    </div>
+
+    <div class="home-feature">
+        <span>03</span>
+        <h2>Understand</h2>
+        <p>See how much you're spending on subscriptions.</p>
+    </div>
+
+</section>
+
+{% endif %}
+
+{% endblock %}

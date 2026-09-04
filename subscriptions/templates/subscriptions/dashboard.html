@@ -1,0 +1,282 @@
+{% extends 'subscriptions/main.html' %}
+
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+
+        <div>
+            <p class="dashboard-label">DASHBOARD</p>
+
+            <h1>
+                Welcome back, {{ request.user.username }}.
+            </h1>
+
+            <p class="dashboard-sub">
+                Here's your subscription overview.
+            </p>
+        </div>
+
+        <a href="{% url 'add_sub' %}" class="add-subscription">
+            + Add subscription
+        </a>
+
+    </section>
+
+
+    <!-- Statistics -->
+    <section class="stats-grid">
+
+        <div class="stat-card">
+
+            <p>Monthly spending</p>
+
+            <h2>
+                ${{ monthly_spending|floatformat:2 }}
+            </h2>
+
+            <span>
+                Across all subscriptions
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <p>Yearly spending</p>
+
+            <h2>
+                ${{ yearly_spending|floatformat:2 }}
+            </h2>
+
+            <span>
+                Estimated annual cost
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <p>Active subscriptions</p>
+
+            <h2>
+                {{ active_subscriptions }}
+            </h2>
+
+            <span>
+                Currently active
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Main Dashboard -->
+    <section class="dashboard-grid">
+
+
+        <!-- Subscriptions -->
+        <div class="subscriptions-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Your subscriptions</h2>
+
+                    <p>
+                        All your active subscriptions.
+                    </p>
+                </div>
+
+                <a href="{% url 'add_sub' %}">
+                    Add
+                </a>
+
+            </div>
+
+
+            <div class="subscription-list">
+
+                {% for subscription in subscriptions %}
+
+                <div class="subscription-row">
+
+                    <div class="subscription-info">
+
+                        <div class="subscription-icon">
+                            {{ subscription.merchant|first|upper }}
+                        </div>
+
+                        <div>
+                            <h3>
+                                {{ subscription.merchant }}
+                            </h3>
+
+                            <p>
+                                {{ subscription.billing_period|title }}
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="subscription-price">
+
+                        <strong>
+                            ${{ subscription.amount|floatformat:2 }}
+                        </strong>
+
+                        <span>
+                            {{ subscription.date_due|date:"M j" }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="subscription-empty">
+
+                    <div class="empty-icon">
+                        +
+                    </div>
+
+                    <h3>
+                        No subscriptions yet
+                    </h3>
+
+                    <p>
+                        Add your first subscription to start
+                        tracking your spending.
+                    </p>
+
+                    <a
+                        href="{% url 'add_sub' %}"
+                        class="empty-button"
+                    >
+                        Add subscription
+                    </a>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- Upcoming -->
+        <aside class="upcoming-panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h2>
+                        Upcoming
+                    </h2>
+
+                    <p>
+                        Your next payment
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if subscriptions %}
+
+                {% with next_subscription=subscriptions.0 %}
+
+                <div class="upcoming-card">
+
+                    <div class="upcoming-icon">
+                        {{ next_subscription.merchant|first|upper }}
+                    </div>
+
+
+                    <div class="upcoming-info">
+
+                        <h3>
+                            {{ next_subscription.merchant }}
+                        </h3>
+
+                        <p>
+                            Next payment
+                        </p>
+
+                    </div>
+
+
+                    <strong>
+                        ${{ next_subscription.amount|floatformat:2 }}
+                    </strong>
+
+                </div>
+
+
+                <div class="upcoming-date">
+
+                    {{ next_subscription.date_due|date:"F j, Y" }}
+
+                </div>
+
+                {% endwith %}
+
+            {% else %}
+
+                <div class="upcoming-empty">
+
+                    <p>
+                        No upcoming payments.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </aside>
+
+    </section>
+
+
+    <!-- Analytics -->
+    <section class="analytics-preview">
+
+        <div>
+
+            <p class="dashboard-label">
+                ANALYTICS
+            </p>
+
+            <h2>
+                Understand your spending.
+            </h2>
+
+            <p>
+                See where your money goes and how your
+                subscription spending changes over time.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'analytics' %}"
+            class="analytics-button"
+        >
+            View analytics
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'subscriptions/main.html' %}
+
+{% block content %}
+
+<div class="delete-page">
+
+    <div class="delete-card">
+
+        <div class="delete-icon">
+            !
+        </div>
+
+        <h1>Delete your account?</h1>
+
+        <p>
+            This will permanently delete your account and
+            all of your subscriptions. This action cannot be undone.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="delete-button"
+            >
+                Delete account
+            </button>
+        </form>
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="cancel-delete"
+        >
+            Cancel
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

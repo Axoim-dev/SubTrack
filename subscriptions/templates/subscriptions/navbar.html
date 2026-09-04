@@ -1,0 +1,138 @@
+<nav class="navbar">
+    <div class="nav-container">
+
+        <a href="{% url 'home' %}" class="nav-logo">
+            SubTrack
+        </a>
+
+        <ul class="nav-links">
+
+            <li>
+                <a href="{% url 'home' %}">
+                    Home
+                </a>
+            </li>
+
+            {% if request.user.is_authenticated %}
+
+                <li class="dropdown">
+
+                    <button
+                        type="button"
+                        class="dropdown-button"
+                        id="dashboardDropdownButton"
+                    >
+                        Dashboard
+                        <span class="dropdown-arrow">⌄</span>
+                    </button>
+
+                    <div
+                        class="dropdown-menu"
+                        id="dashboardDropdownMenu"
+                    >
+                        <a href="{% url 'dashboard' %}">
+                            Dashboard
+                        </a>
+
+                        <a href="{% url 'analytics' %}">
+                            Analytics
+                        </a>
+                    </div>
+
+                </li>
+
+                <li>
+                    <a href="{% url 'logout' %}">
+                        Logout
+                    </a>
+                </li>
+
+                {% if request.session.gmail_verified %}
+
+                    <li>
+                        <a href="{% url 'register_gmail' %}">
+                            Change Gmail
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'remove_gmail' %}">
+                            Remove Gmail
+                        </a>
+                    </li>
+                {% else %}  
+                    <li>
+                        <a href="{% url 'register_gmail' %}">
+                            Register Gmail
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                <li>
+                    <a href="{% url 'delete_account' %}">
+                        Delete Account
+                    </a>
+                </li>
+
+
+            {% else %}
+
+                <li>
+                    <a href="{% url 'login' %}">
+                        Login
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'signup' %}" class="nav-signup">
+                        Sign Up
+                    </a>
+                </li>
+
+            {% endif %}
+
+        </ul>
+
+    </div>
+</nav>
+
+<script>
+    const dropdownButton = document.getElementById(
+        "dashboardDropdownButton"
+    );
+
+    const dropdownMenu = document.getElementById(
+        "dashboardDropdownMenu"
+    );
+
+    if (dropdownButton && dropdownMenu) {
+
+        dropdownButton.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            dropdownMenu.classList.toggle("dropdown-open");
+
+            dropdownButton.classList.toggle("dropdown-active");
+
+        });
+
+
+        document.addEventListener("click", function () {
+
+            dropdownMenu.classList.remove("dropdown-open");
+
+            dropdownButton.classList.remove("dropdown-active");
+
+        });
+
+
+        dropdownMenu.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+        });
+
+    }
+</script>

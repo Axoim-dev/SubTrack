@@ -1,0 +1,54 @@
+{% extends 'subscriptions/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'subscriptions/delete.css' %}">
+
+<div class="gmail-delete-page">
+
+    <div class="gmail-delete-card">
+
+        <div class="gmail-delete-icon">
+            ✉
+        </div>
+
+        <h1>Disconnect Gmail?</h1>
+
+        <p class="gmail-delete-description">
+            This will disconnect your Gmail account from SubTrack.
+            SubTrack will no longer scan your Gmail for subscription emails.
+        </p>
+
+        <div class="gmail-delete-warning">
+            <strong>Your subscriptions will stay safe.</strong>
+            <span>
+                Existing subscriptions will remain in your SubTrack account.
+            </span>
+        </div>
+
+        <form method="POST" class="gmail-delete-form">
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="gmail-delete-button"
+            >
+                Disconnect Gmail
+            </button>
+
+            <a
+                href="{% url 'dashboard' %}"
+                class="gmail-delete-cancel"
+            >
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

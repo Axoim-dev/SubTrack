@@ -1,0 +1,128 @@
+{% extends 'subscriptions/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'subscriptions/analytics.css' %}">
+
+<div class="analytics-page">
+
+    <!-- HEADER -->
+    <div class="analytics-header">
+        <h1>Analytics</h1>
+        <p>See where your money is going.</p>
+    </div>
+
+
+    <!-- SUMMARY CARDS -->
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                Monthly spending
+            </span>
+
+            <span class="stat-value">
+                ${{ analytics.total_monthly }}
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                Yearly spending
+            </span>
+
+            <span class="stat-value">
+                ${{ analytics.total_yearly }}
+            </span>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                Subscriptions
+            </span>
+
+            <span class="stat-value">
+                {{ analytics.subscription_count }}
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- SPENDING OVER TIME -->
+    <div class="chart-card large-chart">
+
+        <div class="chart-header">
+            <h2>Spending over time</h2>
+            <p>Your subscription spending by month.</p>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="monthlySpendingChart"></canvas>
+        </div>
+
+    </div>
+
+
+    <!-- LOWER CHARTS -->
+    <div class="charts-grid">
+
+
+        <!-- CATEGORY CHART -->
+        <div class="chart-card">
+
+            <div class="chart-header">
+                <h2>Spending by category</h2>
+                <p>Where your money goes.</p>
+            </div>
+
+            <div class="chart-container category-chart">
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- SUBSCRIPTION CHART -->
+        <div class="chart-card">
+
+            <div class="chart-header">
+                <h2>Subscription costs</h2>
+                <p>Your most expensive subscriptions.</p>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="subscriptionChart"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--
+    Converts the Django analytics dictionary
+    into safe JSON that JavaScript can read.
+-->
+{{ analytics|json_script:"analytics-data" }}
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- Analytics JavaScript -->
+<script src="{% static 'subscriptions/analytics.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'subscriptions/main.html' %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <form class="login-card" method="POST">
+        {% csrf_token %}
+
+        <div class="login-mark">S</div>
+
+        <h1>Sign in</h1>
+        <p class="login-sub">Log in to your SubTrack account.</p>
+
+        <div class="login-field">
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Username"
+                required
+            >
+            <label for="username">Username</label>
+        </div>
+
+        <div class="login-field">
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+            >
+            <label for="password">Password</label>
+        </div>
+
+        {% if error %}
+            <p class="login-error">{{ error }}</p>
+        {% endif %}
+
+        <button class="login-button" type="submit">
+            Continue
+        </button>
+
+        <div class="login-meta">
+            <span>No account?</span>
+            <a href="{% url 'signup' %}">Sign up</a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

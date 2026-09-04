@@ -1,0 +1,165 @@
+.gmail-delete-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    box-sizing: border-box;
+}
+
+.gmail-delete-card {
+    width: 100%;
+    max-width: 460px;
+    padding: 40px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+.gmail-delete-icon {
+    width: 72px;
+    height: 72px;
+
+    margin: 0 auto 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #f1f3f5;
+    border-radius: 50%;
+
+    font-size: 30px;
+}
+
+.gmail-delete-card h1 {
+    margin: 0 0 16px;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #222222;
+}
+
+.gmail-delete-description {
+    margin: 0 auto 24px;
+
+    max-width: 380px;
+
+    color: #666666;
+
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.gmail-delete-warning {
+    margin-bottom: 28px;
+    padding: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    background: #fff4e5;
+    border-radius: 10px;
+
+    color: #8a5700;
+
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.gmail-delete-warning strong {
+    font-weight: 700;
+}
+
+.gmail-delete-warning span {
+    font-weight: 400;
+}
+
+.gmail-delete-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    width: 100%;
+}
+
+.gmail-delete-button {
+    width: 100%;
+
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #d9363e;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.gmail-delete-button:hover {
+    background: #b52b32;
+}
+
+.gmail-delete-button:active {
+    transform: scale(0.98);
+}
+
+.gmail-delete-cancel {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 14px 20px;
+
+    border-radius: 9px;
+
+    background: #eeeeee;
+    color: #333333;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.gmail-delete-cancel:hover {
+    background: #dddddd;
+}
+
+.gmail-delete-cancel:active {
+    transform: scale(0.98);
+}
+
+@media (max-width: 500px) {
+
+    .gmail-delete-page {
+        padding: 20px;
+    }
+
+    .gmail-delete-card {
+        padding: 30px 22px;
+    }
+
+    .gmail-delete-card h1 {
+        font-size: 24px;
+    }
+
+}
