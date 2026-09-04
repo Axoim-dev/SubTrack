@@ -1,0 +1,13 @@
+Django
+celery
+redis
+python-dateutil
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+requests
+psycopg2-binary
+dj-database-url
+python-dotenv
+gunicorn
