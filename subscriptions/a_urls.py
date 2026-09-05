@@ -13,5 +13,5 @@ urlpatterns = [
     path("register-gmail/", views.register, name="register_gmail"),
     path("google/callback/", views.google_callback, name="google_callback"),
     path("remove-gmail/", views.remove_gmail , name="remove_gmail"),
-    path("settings", views.settings, name="settings"),
+    path("settings", views.user_settings, name="settings"),
 ]

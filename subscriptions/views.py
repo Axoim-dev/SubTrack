@@ -431,7 +431,7 @@ def remove_gmail(request):
     return render(request, "subscriptions/delete_gmail.html")
 
 @login_required
-def settings(request):
+def user_settings(request):
     user = request.user
     if request.method == "POST":
         name = request.POST.get("name", "").strip()
