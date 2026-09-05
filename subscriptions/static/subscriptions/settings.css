@@ -1,0 +1,133 @@
+.settings-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 60px 20px;
+    box-sizing: border-box;
+}
+
+.settings-card {
+    width: 100%;
+    max-width: 520px;
+    padding: 40px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
+}
+
+.settings-card h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #222222;
+}
+
+.settings-sub {
+    margin: 0 0 32px;
+    color: #777777;
+    font-size: 15px;
+}
+
+.settings-field {
+    margin-bottom: 20px;
+}
+
+.settings-field label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.settings-field input {
+    width: 100%;
+    padding: 13px 14px;
+    box-sizing: border-box;
+
+    border: 1px solid #d8d8d8;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #222222;
+
+    font-size: 15px;
+
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.settings-field input:focus {
+    border-color: #555555;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.settings-field input::placeholder {
+    color: #999999;
+}
+
+.settings-button {
+    width: 100%;
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 9px;
+
+    background: #222222;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.settings-button:hover {
+    background: #333333;
+}
+
+.settings-button:active {
+    transform: scale(0.98);
+}
+
+.settings-error {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    background: #ffe9e9;
+    color: #c62828;
+
+    font-size: 14px;
+}
+
+.settings-success {
+    margin: 0 0 18px;
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    background: #e8f5e9;
+    color: #2e7d32;
+
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+
+    .settings-page {
+        padding: 30px 15px;
+    }
+
+    .settings-card {
+        padding: 30px 22px;
+    }
+
+    .settings-card h1 {
+        font-size: 26px;
+    }
+}

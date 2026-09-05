@@ -427,3 +427,43 @@ def remove_gmail(request):
 
         return redirect("home")
     return render(request, "subscriptions/delete_gmail.html")
+
+@login_required
+def settings(request):
+    user = request.user
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        username = request.POST.get("username", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "")
+        
+        if len(username) < 6:
+            return render(request, "subscriptions/settings.html",
+                {"error": "Username must be at least 6 characters long."}
+            )
+        if User.objects.filter(username=username).exclude(id=user.id).first():
+            return render(request, "subscriptions/settings.html",
+                          {"error":"Username is already taken"}
+            )
+        if User.objects.filter(email=email).exclude(id=user.id).first():
+            return render(request, "subscriptions/settings.html",
+                          {"error":"Email is already taken"}
+            )
+        user.name = name
+        user.username = username
+        user.email = email
+
+        if password:
+            if len(password) < 6:
+                return render(request, "subscriptions/settings.html",
+                              {"error":"Password must be at least 6 characters long."}
+                )
+            user.set_password(password)
+
+        user.save()
+        return render(request, "subscriptions/settings.html",
+            {"success": "Settings saved successfully."}
+        )
+        
+
+    return render(request, "subscriptions/settings.html")

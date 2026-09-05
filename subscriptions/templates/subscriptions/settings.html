@@ -1,0 +1,79 @@
+{% extends 'subscriptions/main.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'subscriptions/settings.css' %}">
+
+<div class="settings-page">
+
+    <form class="settings-card" method="POST">
+        {% csrf_token %}
+
+        <h1>Settings</h1>
+        <p class="settings-sub">Manage your SubTrack account.</p>
+
+        <div class="settings-field">
+            <label for="name">Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="{{ request.user.name }}"
+                required
+            >
+        </div>
+
+        <div class="settings-field">
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                value="{{ request.user.username }}"
+                minlength="6"
+                required
+            >
+        </div>
+
+        <div class="settings-field">
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ request.user.email }}"
+                required
+            >
+        </div>
+
+        <div class="settings-field">
+            <label for="password">New Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Leave blank to keep current password"
+                minlength="6"
+            >
+        </div>
+
+        {% if error %}
+            <p class="settings-error">{{ error }}</p>
+        {% endif %}
+
+        {% if success %}
+            <p class="settings-success">{{ success }}</p>
+        {% endif %}
+
+        <button class="settings-button" type="submit">
+            Save Changes
+        </button>
+
+    </form>
+
+</div>
+
+<script src="{% static 'subscriptions/settings.js' %}"></script>
+
+{% endblock %}

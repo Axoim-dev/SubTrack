@@ -43,6 +43,10 @@
                         <a href="{% url 'logout' %}">Logout</a>
                     </li>
 
+                    <li>
+                        <a href="{% url 'settings' %}">Settings</a>
+                    </li>
+
                     {% if request.session.gmail_verified %}
 
                         <li>
