@@ -109,18 +109,18 @@ GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
 from celery.schedules import timedelta
 
 CELERY_BEAT_SCHEDULE = {
-    "update-subscription-due-dates-every-15-seconds": {
+    "update-subscription-due-dates-every-3-hours": {
         "task": "subscriptions.tasks.update_due_dates",
-        "schedule": timedelta(seconds=15),
+        "schedule": timedelta(hours=3),
     },
 
-    "queue-gmail-syncs-every-10-seconds": {
+    "queue-gmail-syncs-every-3-hours": {
         "task": "subscriptions.tasks.queue_gmail_syncs",
-        "schedule": timedelta(seconds=10),
+        "schedule": timedelta(hours=3),
     },
 }
 
-CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
+CELERY_BROKER_URL = "redis://localhost:6379/0"
 LOGIN_URL = "/login/"
 
 
