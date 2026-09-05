@@ -103,9 +103,9 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": timedelta(days=1),
     },
 
-    "queue-gmail-syncs-every-10-seconds": {
+    "queue-gmail-syncs-every-3-hours": {
         "task": "subscriptions.tasks.queue_gmail_syncs",
-        "schedule": timedelta(seconds=10),
+        "schedule": timedelta(hours=3),
     },
 }
 
