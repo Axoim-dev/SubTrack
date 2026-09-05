@@ -79,18 +79,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 load_dotenv(BASE_DIR / "config" / "config.env")
 DEBUG = os.environ["DEBUG"]
+import dj_database_url
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["PGDATABASE"],
-        "USER": os.environ["PGUSER"],
-        "PASSWORD": os.environ["PGPASSWORD"],
-        "HOST": os.environ["PGHOST"],
-        "PORT": os.environ["PGPORT"],
-
-        "CONN_MAX_AGE": 600,
-        "CONN_HEALTH_CHECKS": True,
-    }
+    "default": dj_database_url.parse(
+        os.environ["DATABASE_URL"]
+    )
 }
 GOOGLE_CLIENT_ID = os.environ["GOOGLE_CLIENT_ID"]
 GOOGLE_CLIENT_SECRET = os.environ["GOOGLE_CLIENT_SECRET"]
