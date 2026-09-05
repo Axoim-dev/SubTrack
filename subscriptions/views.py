@@ -11,6 +11,8 @@ from django.conf import settings
 from django.shortcuts import redirect
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
+from django.contrib.auth import update_session_auth_hash
+import time
 
 # Create your views here.
 
@@ -453,17 +455,28 @@ def settings(request):
         user.username = username
         user.email = email
 
+        password_changed = False
+
         if password:
             if len(password) < 6:
-                return render(request, "subscriptions/settings.html",
-                              {"error":"Password must be at least 6 characters long."}
+                return render(
+                    request,
+                    "subscriptions/settings.html",
+                    {"error": "Password must be at least 6 characters long."}
                 )
+
             user.set_password(password)
+            password_changed = True
 
         user.save()
+
+        if password_changed:
+            update_session_auth_hash(request, user)
+        
         return render(request, "subscriptions/settings.html",
             {"success": "Settings saved successfully."}
         )
+        
         
 
     return render(request, "subscriptions/settings.html")

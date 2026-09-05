@@ -1,7 +1,9 @@
 .settings-page {
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
     padding: 60px 20px;
     box-sizing: border-box;
 }
@@ -11,31 +13,56 @@
     max-width: 520px;
     padding: 40px;
     box-sizing: border-box;
+
     background: #ffffff;
     border-radius: 18px;
+
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.10);
 }
 
-.settings-card h1 {
-    margin: 0 0 8px;
-    font-size: 30px;
-    font-weight: 700;
-    color: #222222;
+.settings-header {
+    margin-bottom: 32px;
 }
 
-.settings-sub {
-    margin: 0 0 32px;
+.settings-header h1 {
+    margin: 0 0 8px;
+
+    color: #222222;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.settings-header p {
+    margin: 0;
+
     color: #777777;
     font-size: 15px;
+}
+
+.settings-section {
+    margin-bottom: 28px;
+}
+
+.settings-section h2 {
+    margin: 0 0 20px;
+
+    color: #333333;
+    font-size: 18px;
+    font-weight: 650;
 }
 
 .settings-field {
     margin-bottom: 20px;
 }
 
+.settings-field:last-child {
+    margin-bottom: 0;
+}
+
 .settings-field label {
     display: block;
     margin-bottom: 8px;
+
     color: #333333;
     font-size: 14px;
     font-weight: 600;
@@ -55,12 +82,17 @@
     font-size: 15px;
 
     outline: none;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .settings-field input:focus {
     border-color: #555555;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 0, 0, 0.06);
 }
 
 .settings-field input::placeholder {
@@ -82,7 +114,9 @@
 
     cursor: pointer;
 
-    transition: background 0.2s ease, transform 0.1s ease;
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
 }
 
 .settings-button:hover {
@@ -117,6 +151,69 @@
     font-size: 14px;
 }
 
+
+/* Danger Zone */
+
+.danger-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+
+    border: 1px solid #f0caca;
+}
+
+.danger-content {
+    flex: 1;
+}
+
+.danger-content h2 {
+    margin: 0 0 8px;
+
+    color: #c62828;
+    font-size: 18px;
+    font-weight: 650;
+}
+
+.danger-content p {
+    margin: 0;
+
+    color: #777777;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.delete-account-button {
+    flex-shrink: 0;
+
+    padding: 12px 18px;
+
+    border-radius: 9px;
+
+    background: #d9363e;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.delete-account-button:hover {
+    background: #b52b32;
+}
+
+.delete-account-button:active {
+    transform: scale(0.97);
+}
+
+
+/* Mobile */
+
 @media (max-width: 600px) {
 
     .settings-page {
@@ -127,7 +224,18 @@
         padding: 30px 22px;
     }
 
-    .settings-card h1 {
+    .settings-header h1 {
         font-size: 26px;
+    }
+
+    .danger-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .delete-account-button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
     }
 }
