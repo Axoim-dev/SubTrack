@@ -91,6 +91,11 @@ STORAGES = {
     },
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://subtrack-production-71eb.up.railway.app",
+    "http://127.0.0.1:8000",
+]
+
 DATABASES = {
     "default": dj_database_url.parse(
         os.environ["DATABASE_URL"]
