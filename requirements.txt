@@ -12,3 +12,4 @@ dj-database-url
 python-dotenv
 gunicorn
 dj_database_url
+whitenoise
