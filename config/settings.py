@@ -120,7 +120,7 @@ CELERY_BEAT_SCHEDULE = {
     },
 }
 
-CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_BROKER_URL = os.environ["CELERY_BROKER_URL"]
 LOGIN_URL = "/login/"
 
 
