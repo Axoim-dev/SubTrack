@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-q_2+u=$g2f)!av%#s%=1zn0*6(iulv=ggiml%nv-_44^23m%h6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
 
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "subscriptions.User"
@@ -78,6 +78,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/6.1/ref/settings/#databases
 
 load_dotenv(BASE_DIR / "config" / "config.env")
+DEBUG = os.environ["DEBUG"]
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
