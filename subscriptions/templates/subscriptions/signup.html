@@ -1,5 +1,5 @@
 {% extends 'subscriptions/main.html' %}
-
+{% load static %}
 {% block content %}
 
 <div class="signup-page">
@@ -72,5 +72,6 @@
     </form>
 
 </div>
+<script src="{% static 'subscriptions/script.js' %}"></script>
 
 {% endblock %}
