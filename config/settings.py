@@ -85,6 +85,7 @@ DATABASES = {
         os.environ["DATABASE_URL"]
     )
 }
+ALLOWED_HOSTS = os.environ["ALLOWED_HOSTS"].split(",")
 GOOGLE_CLIENT_ID = os.environ["GOOGLE_CLIENT_ID"]
 GOOGLE_CLIENT_SECRET = os.environ["GOOGLE_CLIENT_SECRET"]
 GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
