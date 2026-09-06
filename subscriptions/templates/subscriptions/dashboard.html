@@ -124,6 +124,7 @@
 
                     </div>
 
+
                     <div class="subscription-price">
 
                         <strong>
@@ -133,6 +134,42 @@
                         <span>
                             {{ subscription.date_due|date:"M j" }}
                         </span>
+
+                    </div>
+
+
+                    <!-- Three Dot Menu -->
+                    <div class="subscription-menu">
+
+                        <button
+                            type="button"
+                            class="dots-button"
+                            onclick="toggleSubscriptionMenu(this)"
+                            aria-label="Subscription options"
+                        >
+                            ⋮
+                        </button>
+
+                        <div class="subscription-dropdown">
+
+                            <a href="#">
+                                Edit subscription
+                            </a>
+
+                            <form
+                                method="POST"
+                                action="{% url 'remove_subscription' subscription.id %}"
+                            >
+
+                                {% csrf_token %}
+
+                                <button type="submit">
+                                    Remove subscription
+                                </button>
+
+                            </form>
+
+                        </div>
 
                     </div>
 
@@ -278,5 +315,7 @@
     </section>
 
 </div>
+
+<script src="{% static 'subscriptions/dashboard.js' %}"></script>
 
 {% endblock %}

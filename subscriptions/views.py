@@ -285,6 +285,10 @@ def add_sub(request):
         "subscriptions/add_sub.html"
     )
 
+@login_required
+def remove_sub(request):
+    pass
+
 @login_required(login_url="login")
 def delete_acc(request):
     if not request.user.is_authenticated:
