@@ -2,23 +2,21 @@
 
 {% block content %}
 
-<div class="login-verification-page">
+<div class="verification-page">
 
-    <div class="login-verification-card">
+    <div class="verification-card">
 
-        <div class="login-verification-mark">S</div>
-
-        <div class="login-verification-header">
-            <h1>Verify your login</h1>
+        <div class="verification-header">
+            <h2>Verify your login</h2>
 
             <p>
                 We sent a 6-digit verification code to
-                <span class="login-verification-email">{{ email }}</span>.
+                <span class="verification-email">{{ email }}</span>.
             </p>
         </div>
 
         {% if error %}
-            <div class="login-verification-error">
+            <div class="verification-error">
                 {{ error }}
             </div>
         {% endif %}
@@ -26,44 +24,34 @@
         <form method="POST">
             {% csrf_token %}
 
-            <div class="login-verification-field">
-                <input
-                    type="text"
-                    name="code"
-                    id="code"
-                    class="login-verification-code-input"
-                    placeholder="000000"
-                    maxlength="6"
-                    inputmode="numeric"
-                    pattern="[0-9]{6}"
-                    autocomplete="one-time-code"
-                    required
-                >
-
-                <label for="code">
-                    Verification code
-                </label>
-            </div>
+            <input
+                type="text"
+                name="code"
+                class="verification-code-input"
+                placeholder="000000"
+                maxlength="6"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                autocomplete="one-time-code"
+                required
+            >
 
             <button
                 type="submit"
-                class="login-verification-button"
+                class="verification-button"
             >
                 Verify login
             </button>
         </form>
 
-        <p class="login-verification-info">
+        <p class="verification-info">
             Your verification code expires in 10 minutes.
         </p>
 
-        <div class="login-verification-resend">
+        <div class="verification-resend">
             <p>Didn't receive the code?</p>
 
-            <form
-                method="POST"
-                action="{% url 'resend_login_code' %}"
-            >
+            <form method="POST" action="{% url 'resend_code' %}">
                 {% csrf_token %}
 
                 <button type="submit">
@@ -72,7 +60,7 @@
             </form>
         </div>
 
-        <div class="login-verification-back">
+        <div class="verification-back">
             <a href="{% url 'login' %}">
                 Back to sign in
             </a>

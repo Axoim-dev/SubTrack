@@ -2342,286 +2342,300 @@ body {
     }
 }
 
-.login-verification-page {
-    min-height: 70vh;
+.verification-page {
+
+    min-height: calc(100vh - 80px);
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    padding: 24px;
-    background: #f4f5f7;
+
+    padding: 40px 20px;
+
 }
 
-.login-verification-card {
+.verification-card {
+
     width: 100%;
-    max-width: 400px;
-    padding: 44px 40px;
-    box-sizing: border-box;
+
+    max-width: 430px;
+
+    padding: 40px;
 
     background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+
     border-radius: 16px;
 
-    box-shadow:
-        0 1px 2px rgba(16, 24, 40, .05),
-        0 24px 48px -12px rgba(16, 24, 40, .12);
+    box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+
 }
 
-.login-verification-mark {
-    width: 44px;
-    height: 44px;
+.verification-header {
 
-    margin-bottom: 22px;
+    text-align: center;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin-bottom: 28px;
 
-    border-radius: 12px;
-
-    background: #16181d;
-    color: #ffffff;
-
-    font-size: 1.15rem;
-    font-weight: 800;
 }
 
-.login-verification-header h1 {
-    margin: 0 0 8px;
+.verification-header h2 {
 
-    color: #16181d;
+    margin: 0 0 10px;
 
-    font-size: 1.45rem;
-    font-weight: 700;
-    letter-spacing: -.02em;
+    color: #111827;
+
+    font-size: 22px;
+
 }
 
-.login-verification-header p {
-    margin: 0 0 28px;
+.verification-header p {
+
+    margin: 0;
 
     color: #667085;
 
-    font-size: .93rem;
+    font-size: 14px;
+
     line-height: 1.6;
+
 }
 
-.login-verification-email {
-    color: #16181d;
+.verification-email {
+
+    color: #344054;
+
     font-weight: 600;
+
     word-break: break-word;
+
 }
 
+.verification-error {
 
-/* Error */
-
-.login-verification-error {
-    margin: -4px 0 16px;
+    margin-bottom: 18px;
 
     padding: 11px 13px;
 
-    border-radius: 9px;
-
     background: #fef3f2;
-    color: #d92d20;
 
-    font-size: .85rem;
-    line-height: 1.4;
+    border: 1px solid #fecdca;
+
+    border-radius: 8px;
+
+    color: #b42318;
+
+    font-size: 13px;
+
+    text-align: center;
+
 }
 
+.verification-code-input {
 
-/* Code input */
-
-.login-verification-field {
-    position: relative;
-    margin-bottom: 18px;
-}
-
-.login-verification-code-input {
     width: 100%;
 
-    padding: 22px 14px 8px;
+    height: 58px;
+
+    padding: 0 15px;
 
     box-sizing: border-box;
 
     border: 1px solid #d0d5dd;
+
     border-radius: 10px;
 
     background: #ffffff;
-    color: #16181d;
 
-    font-size: 1.05rem;
+    color: #111827;
+
+    text-align: center;
+
+    font-size: 26px;
+
     font-weight: 600;
 
-    letter-spacing: .12em;
+    letter-spacing: 8px;
 
-    transition:
-        border-color .15s ease,
-        box-shadow .15s ease;
-}
-
-.login-verification-code-input:focus {
     outline: none;
 
-    border-color: #16181d;
+    transition:
 
-    box-shadow:
-        0 0 0 3px rgba(22, 24, 29, .08);
+        border-color 0.15s ease,
+
+        box-shadow 0.15s ease;
+
 }
 
-.login-verification-field label {
-    position: absolute;
+.verification-code-input:focus {
 
-    left: 14px;
-    top: 15px;
+    border-color: #667085;
+
+    box-shadow: 0 0 0 3px rgba(102, 112, 133, 0.12);
+
+}
+
+.verification-code-input::placeholder {
 
     color: #98a2b3;
 
-    font-size: .95rem;
+    letter-spacing: 6px;
 
-    pointer-events: none;
-
-    transition: all .15s ease;
 }
 
-.login-verification-code-input:focus + label,
-.login-verification-code-input:not(:placeholder-shown) + label {
-    top: 7px;
+.verification-button {
 
-    color: #16181d;
-
-    font-size: .7rem;
-    font-weight: 600;
-
-    letter-spacing: .02em;
-
-    text-transform: uppercase;
-}
-
-.login-verification-code-input::placeholder {
-    color: transparent;
-}
-
-
-/* Verify button */
-
-.login-verification-button {
     width: 100%;
 
-    margin-top: 6px;
+    height: 48px;
 
-    padding: 13px;
+    margin-top: 18px;
 
-    border: 0;
-    border-radius: 10px;
+    border: none;
 
-    background: #16181d;
+    border-radius: 9px;
+
+    background: #111827;
+
     color: #ffffff;
 
-    font-size: .95rem;
-    font-weight: 700;
+    font-size: 14px;
+
+    font-weight: 600;
 
     cursor: pointer;
 
     transition:
-        opacity .15s ease,
-        transform .1s ease;
+
+        background 0.15s ease,
+
+        transform 0.1s ease;
+
 }
 
-.login-verification-button:hover {
-    opacity: .88;
+.verification-button:hover {
+
+    background: #1f2937;
+
 }
 
-.login-verification-button:active {
-    transform: scale(.99);
+.verification-button:active {
+
+    transform: scale(0.99);
+
 }
 
+.verification-info {
 
-/* Expiry information */
-
-.login-verification-info {
-    margin: 18px 0 0;
+    margin: 20px 0 0;
 
     color: #98a2b3;
 
-    text-align: center;
+    font-size: 12px;
 
-    font-size: .8rem;
     line-height: 1.5;
-}
-
-
-/* Resend */
-
-.login-verification-resend {
-    margin-top: 26px;
-
-    padding-top: 22px;
-
-    border-top: 1px solid #eaecf0;
 
     text-align: center;
+
 }
 
-.login-verification-resend p {
-    margin: 0 0 9px;
+.verification-resend {
+
+    margin-top: 24px;
+
+    padding-top: 24px;
+
+    border-top: 1px solid #e5e7eb;
+
+    text-align: center;
+
+}
+
+.verification-resend p {
+
+    margin: 0;
 
     color: #667085;
 
-    font-size: .85rem;
+    font-size: 13px;
+
 }
 
-.login-verification-resend button {
-    padding: 0;
+.verification-resend button {
 
-    border: 0;
+    margin-top: 7px;
+
+    border: none;
 
     background: transparent;
-    color: #16181d;
 
-    font-size: .85rem;
-    font-weight: 700;
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 600;
 
     cursor: pointer;
+
 }
 
-.login-verification-resend button:hover {
+.verification-resend button:hover {
+
     text-decoration: underline;
+
 }
 
+.verification-back {
 
-/* Back to login */
+    margin-top: 18px;
 
-.login-verification-back {
-    display: flex;
-    justify-content: center;
+    text-align: center;
 
-    margin-top: 20px;
-
-    font-size: .85rem;
 }
 
-.login-verification-back a {
+.verification-back a {
+
     color: #667085;
+
+    font-size: 13px;
 
     font-weight: 600;
 
     text-decoration: none;
+
 }
 
-.login-verification-back a:hover {
-    color: #16181d;
+.verification-back a:hover {
+
+    color: #344054;
+
     text-decoration: underline;
+
 }
-
-
-/* Mobile */
 
 @media (max-width: 480px) {
 
-    .login-verification-page {
-        padding: 20px;
+    .verification-card {
+
+        padding: 30px 22px;
+
     }
 
-    .login-verification-card {
-        padding: 36px 24px;
+    .verification-header h2 {
+
+        font-size: 20px;
+
+    }
+
+    .verification-code-input {
+
+        height: 54px;
+
+        font-size: 23px;
+
     }
 
 }
