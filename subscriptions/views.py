@@ -310,7 +310,6 @@ def edit_subscription(request, sub_id):
     )
 
     if request.method == "POST":
-
         merchant = request.POST.get("merchant")
         amount = request.POST.get("amount")
         due_date = request.POST.get("date_due")

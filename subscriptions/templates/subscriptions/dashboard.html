@@ -152,19 +152,9 @@
 
                         <div class="subscription-dropdown">
 
-                            <form
-                                method="POST"
-                                action="{% url 'edit_subscription' subscription.id %}"
-                            >
-
-                                {% csrf_token %}
-
-                                <button type="submit">
-                                    Edit subscription
-                                </button>
-
-                            </form>
-
+                            <a href="{% url 'edit_subscription' subscription.id %}">
+                                Edit subscription
+                            </a>
                             <form
                                 method="POST"
                                 action="{% url 'remove_subscription' subscription.id %}"
