@@ -365,6 +365,16 @@ def resend_email(request):
 
     return redirect("verify_code")
 
+def resend_login_email(request):
+    email = request.session.get("pending_signup_email")
+
+    if not email:
+        return redirect("login")
+
+    generate_code(email)
+
+    return redirect("verify_login")
+
 def signup(request):
     if request.method == "POST":
         email = request.POST.get("email", "").strip()

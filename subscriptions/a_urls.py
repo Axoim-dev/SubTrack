@@ -19,5 +19,6 @@ urlpatterns = [
     path("verify/code", views.verify_code, name="verify_code"),
     path("resend/code/", views.resend_email, name="resend_code"),
     path("forgot/password", views.forgot_password, name="forgot_password"),
-    path("verify/login", views.verify_login, name="verify_login")
+    path("verify/login", views.verify_login, name="verify_login"),
+    path("resend/login/code", views.resend_login_email, name="resend_login_code")
 ]
