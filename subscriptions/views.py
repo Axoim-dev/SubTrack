@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Subscription, GoogleAccount, EmailVerificationCode, PendingSignup
+from .models import User, Subscription, GoogleAccount, EmailVerificationCode, PendingSignup, LoginemailVerificationCode
 from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
 from django.contrib.admin.models import LogEntry
@@ -224,6 +224,23 @@ If you didn't request this code, you can safely ignore this email.
 
     email_message.send()
 
+def generate_login_code(email):
+    code = str(secrets.randbelow(1_000_000)).zfill(6)
+
+    LoginemailVerificationCode.objects.filter(
+        email=email
+    ).delete()
+
+    LoginemailVerificationCode.objects.create(
+        email=email,
+        code=code,
+        expires_at=timezone.now() + timedelta(minutes=10)
+    )
+
+    create_email(code, email)
+
+    return code
+
 def generate_code(email):
     code = str(secrets.randbelow(1_000_000)).zfill(6)
 
@@ -322,7 +339,7 @@ def verify_login(request):
     if request.method == "POST":
         code = request.POST.get("code", "").strip()
 
-        verification = EmailVerificationCode.objects.filter(
+        verification = LoginemailVerificationCode.objects.filter(
             email=email,
             code=code
         ).order_by("-created_at").first()
@@ -330,7 +347,7 @@ def verify_login(request):
         if not verification:
             return render(
                 request,
-                "subscriptions/code.html",
+                "subscriptions/verify_login.html",
                 {
                     "email": email,
                     "error": "Incorrect verification code."
@@ -340,7 +357,7 @@ def verify_login(request):
         if timezone.now() > verification.expires_at:
             return render(
                 request,
-                "subscriptions/code.html",
+                "subscriptions/verify_login.html",
                 {
                     "email": email,
                     "error": "This verification code has expired."
@@ -350,8 +367,9 @@ def verify_login(request):
         user = User.objects.filter(email=email).first()      
 
         login(request, user)
-
         request.session.pop("login_email")
+        return redirect("dashboard")
+ 
 
     return render(request, "subscriptions/verify_login.html")
 

@@ -122,6 +122,12 @@ class EmailVerificationCode(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
 
+class LoginemailVerificationCode(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
 class PendingSignup(models.Model):
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=150)
