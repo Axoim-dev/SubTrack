@@ -16,4 +16,5 @@ urlpatterns = [
     path("settings", views.user_settings, name="settings"),
     path("subscription/<uuid:subscription_id>/remove/", views.remove_subscription, name="remove_subscription"),
     path("subscription/<uuid:sub_id>/edit/", views.edit_subscription, name="edit_subscription"),
+    path("verify/code", views.verify_code, name="verify_code"),
 ]

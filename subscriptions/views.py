@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Subscription, GoogleAccount
+from .models import User, Subscription, GoogleAccount, EmailVerificationCode
 from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
 from django.contrib.admin.models import LogEntry
@@ -12,7 +12,12 @@ from django.shortcuts import redirect
 from google_auth_oauthlib.flow import Flow
 from googleapiclient.discovery import build
 from django.contrib.auth import update_session_auth_hash
-import time
+from django.core.mail import send_mail
+import secrets
+from datetime import timedelta
+from django.utils import timezone
+from django.core.mail import EmailMultiAlternatives
+from django.contrib.auth.hashers import make_password
 
 # Create your views here.
 
@@ -52,13 +57,258 @@ def dashboard(request):
         }
     )
 
+
+def create_email(code, email):
+
+    subject = "Your SubTrack verification code"
+
+    text_content = f"""
+Your SubTrack verification code is:
+
+{code}
+
+This code expires in 10 minutes.
+
+If you didn't request this code, you can safely ignore this email.
+"""
+
+    html_content = f"""
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubTrack Verification</title>
+</head>
+
+<body style="
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa;
+    font-family: Arial, Helvetica, sans-serif;
+">
+
+    <div style="
+        width: 100%;
+        padding: 40px 0;
+        background-color: #f5f7fa;
+    ">
+
+        <div style="
+            max-width: 520px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 40px;
+            box-sizing: border-box;
+            border: 1px solid #e5e7eb;
+        ">
+
+            <div style="
+                text-align: center;
+                margin-bottom: 30px;
+            ">
+                <h1 style="
+                    margin: 0;
+                    font-size: 28px;
+                    color: #111827;
+                ">
+                    SubTrack
+                </h1>
+
+                <p style="
+                    margin: 8px 0 0;
+                    color: #6b7280;
+                    font-size: 14px;
+                ">
+                    Subscription tracking made simple
+                </p>
+            </div>
+
+
+            <h2 style="
+                margin: 0 0 12px;
+                color: #111827;
+                font-size: 22px;
+            ">
+                Verify your email
+            </h2>
+
+            <p style="
+                margin: 0 0 25px;
+                color: #4b5563;
+                font-size: 15px;
+                line-height: 1.6;
+            ">
+                Use the verification code below to continue creating
+                your SubTrack account.
+            </p>
+
+
+            <div style="
+                background-color: #f3f4f6;
+                border-radius: 12px;
+                padding: 22px;
+                text-align: center;
+                margin: 25px 0;
+            ">
+
+                <div style="
+                    font-size: 32px;
+                    font-weight: bold;
+                    letter-spacing: 8px;
+                    color: #111827;
+                ">
+                    {code}
+                </div>
+
+            </div>
+
+
+            <p style="
+                margin: 0 0 10px;
+                color: #6b7280;
+                font-size: 14px;
+                line-height: 1.5;
+            ">
+                This code will expire in <strong>10 minutes</strong>.
+            </p>
+
+            <p style="
+                margin: 0;
+                color: #9ca3af;
+                font-size: 13px;
+                line-height: 1.5;
+            ">
+                If you didn't request this code, you can safely ignore
+                this email.
+            </p>
+
+
+            <div style="
+                margin-top: 35px;
+                padding-top: 20px;
+                border-top: 1px solid #e5e7eb;
+                text-align: center;
+            ">
+
+                <p style="
+                    margin: 0;
+                    color: #9ca3af;
+                    font-size: 12px;
+                ">
+                    © 2026 SubTrack
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+"""
+
+    email_message = EmailMultiAlternatives(
+        subject=subject,
+        body=text_content,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[email],
+    )
+
+    email_message.attach_alternative(
+        html_content,
+        "text/html"
+    )
+
+    email_message.send()
+
+def generate_code(email):
+    code = str(secrets.randbelow(1_000_000)).zfill(6)
+
+
+    EmailVerificationCode.objects.create(
+        email=email,
+        code=code,
+        expires_at=timezone.now() + timedelta(minutes=10)
+    )
+
+    create_email(code, email)
+
+    return code
+
+def verify_code(request):
+
+    email = request.session.get("signup_email")
+
+    if not email:
+        return redirect("signup")
+
+    if request.method == "POST":
+
+        code = request.POST.get("code", "").strip()
+
+        verification = EmailVerificationCode.objects.filter(
+            email=email,
+            code=code
+        ).order_by("-created_at").first()
+
+        if not verification:
+            return render(
+                request,
+                "code.html",
+                {
+                    "email": email,
+                    "error": "Incorrect verification code."
+                }
+            )
+
+        if timezone.now() > verification.expires_at:
+            return render(
+                request,
+                "code.html",
+                {
+                    "email": email,
+                    "error": "This verification code has expired."
+                }
+            )
+
+        # Code is correct
+        name = request.session.get("signup_name")
+        password = request.session.get("signup_password")
+
+        User.objects.create(
+            name=name,
+            email=email,
+            password=make_password(password)
+        )
+
+        # Delete used verification code
+        verification.delete()
+
+        # Remove temporary signup information
+        request.session.pop("signup_name", None)
+        request.session.pop("signup_email", None)
+        request.session.pop("signup_password", None)
+
+        return redirect("login")
+
+    return render(
+        request,
+        "subscriptions/code.html",
+        {
+            "email": email
+        }
+    )
+
 def signup(request):
     if request.method == "POST":
         email = request.POST["email"]
         name = request.POST["name"]
         username = request.POST["username"]
         password = request.POST["password"]
-
+    
         if User.objects.filter(username=username).exists():
             return render(
                 request,
@@ -71,16 +321,16 @@ def signup(request):
                 "subscriptions/signup.html",
                 {"error":"Email already exists"}
             )
-        user = User.objects.create_user(
-            email=email,
-            password=password,
-            username=username
-        )
-        user.name = name
-        user.save()
 
-        login(request, user)
-        request.session["gmail_verified"] = False
+        request.session["signup_name"] = name
+        request.session["signup_email"] = email
+        request.session["signup_password"] = password
+
+        # Generate and send verification code
+        generate_code(email)
+
+        return redirect("verify_code")
+
         return redirect("dashboard")
     return render(request, "subscriptions/signup.html", )
 
