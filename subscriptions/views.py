@@ -248,6 +248,7 @@ def verify_code(request):
 
     if not email:
         return redirect("signup")
+    generate_code(email)
 
     if request.method == "POST":
 
@@ -313,6 +314,47 @@ def verify_code(request):
         }
     )
 
+def verify_login(request):
+    email = request.session.get("login_email")
+    if not email:
+        return redirect("login")
+    generate_code()
+    if request.method == "POST":
+        code = request.POST.get("code", "").strip()
+
+        verification = EmailVerificationCode.objects.filter(
+            email=email,
+            code=code
+        ).order_by("-created_at").first()
+
+        if not verification:
+            return render(
+                request,
+                "subscriptions/code.html",
+                {
+                    "email": email,
+                    "error": "Incorrect verification code."
+                }
+            )
+
+        if timezone.now() > verification.expires_at:
+            return render(
+                request,
+                "subscriptions/code.html",
+                {
+                    "email": email,
+                    "error": "This verification code has expired."
+                }
+            )
+
+        user = User.objects.filter(email=email).first()      
+
+        login(request, user)
+
+        request.session.pop("login_email")
+
+    return render(request, "subscriptions/verify_login.html")
+
 def resend_email(request):
     email = request.session.get("pending_signup_email")
 
@@ -375,7 +417,7 @@ def signup(request):
         request.session["pending_signup_email"] = email
 
         # Generate and send verification code
-        generate_code(email)
+        
 
         return redirect("verify_code")
 
@@ -384,8 +426,8 @@ def signup(request):
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST["username"]
-        password = request.POST["password"]
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "").strip()
 
         user = authenticate(request, username=username, password=password)
 
@@ -405,6 +447,23 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("home")
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip()
+        if not email:
+            return render(request, "subscriptions/forgot_password.html", {
+                "error":"Enter a valid email"
+            })
+        if not User.objects.filter(email=email).exists():
+            return render(request, "subscriptions/forgot_password.html", {
+                "error":"Account does not exist"
+            })
+
+        request.session["login_email"] = email
+        return redirect("verify_login")
+    
+    return render(request, "subscriptions/forgot_password.html")  
 
 @login_required(login_url="login")
 def analytics(request):

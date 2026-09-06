@@ -417,6 +417,7 @@ body {
     box-shadow:
         0 1px 2px rgba(16, 24, 40, .05),
         0 24px 48px -12px rgba(16, 24, 40, .12);
+    box-sizing: border-box;
 }
 
 .login-mark {
@@ -425,28 +426,25 @@ body {
     border-radius: 12px;
     background: #16181d;
     color: #fff;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     font-weight: 800;
     font-size: 1.15rem;
-
     margin-bottom: 22px;
 }
 
 .login-card h1 {
     font-size: 1.45rem;
     letter-spacing: -.02em;
-    margin-bottom: 4px;
+    margin: 0 0 4px;
     color: #16181d;
 }
 
 .login-sub {
     color: #667085;
     font-size: .93rem;
-    margin-bottom: 30px;
+    margin: 0 0 30px;
 }
 
 .login-field {
@@ -461,7 +459,10 @@ body {
     border-radius: 10px;
     font-size: .95rem;
     background: transparent;
-    transition: border-color .15s, box-shadow .15s;
+    box-sizing: border-box;
+    transition:
+        border-color .15s,
+        box-shadow .15s;
 }
 
 .login-field label {
@@ -492,6 +493,25 @@ body {
 
 .login-field input::placeholder {
     color: transparent;
+}
+
+.login-forgot {
+    display: flex;
+    justify-content: flex-end;
+    margin: -6px 0 18px;
+}
+
+.login-forgot a {
+    color: #667085;
+    font-size: .82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .15s ease;
+}
+
+.login-forgot a:hover {
+    color: #16181d;
+    text-decoration: underline;
 }
 
 .login-button {
@@ -538,6 +558,16 @@ body {
 
 .login-meta a:hover {
     text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 36px 24px;
+    }
 }
 
 .signup-page {
@@ -2155,4 +2185,443 @@ body {
         height: 54px;
         font-size: 23px;
     }
+}
+
+.forgot-password-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f5f7;
+    padding: 24px;
+}
+
+.forgot-password-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 44px 40px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, .05),
+        0 24px 48px -12px rgba(16, 24, 40, .12);
+}
+
+.forgot-password-mark {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #16181d;
+    color: #ffffff;
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.forgot-password-card h1 {
+    margin: 0 0 8px;
+    color: #16181d;
+    font-size: 1.45rem;
+    letter-spacing: -.02em;
+}
+
+.forgot-password-sub {
+    margin: 0 0 30px;
+    color: #667085;
+    font-size: .93rem;
+    line-height: 1.6;
+}
+
+.forgot-password-field {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.forgot-password-field input {
+    width: 100%;
+    padding: 22px 14px 8px;
+    box-sizing: border-box;
+    border: 1px solid #d0d5dd;
+    border-radius: 10px;
+    background: transparent;
+    color: #16181d;
+    font-size: .95rem;
+    transition:
+        border-color .15s,
+        box-shadow .15s;
+}
+
+.forgot-password-field input:focus {
+    outline: none;
+    border-color: #16181d;
+    box-shadow: 0 0 0 3px rgba(22, 24, 29, .08);
+}
+
+.forgot-password-field label {
+    position: absolute;
+    left: 14px;
+    top: 15px;
+    color: #98a2b3;
+    font-size: .95rem;
+    pointer-events: none;
+    transition: all .15s ease;
+}
+
+.forgot-password-field input:focus + label,
+.forgot-password-field input:not(:placeholder-shown) + label {
+    top: 7px;
+    color: #16181d;
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+.forgot-password-field input::placeholder {
+    color: transparent;
+}
+
+.forgot-password-error {
+    margin: -5px 0 14px;
+    color: #d92d20;
+    font-size: .85rem;
+}
+
+.forgot-password-success {
+    margin: -5px 0 14px;
+    color: #027a48;
+    font-size: .85rem;
+}
+
+.forgot-password-button {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
+    border: 0;
+    border-radius: 10px;
+    background: #16181d;
+    color: #ffffff;
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .15s;
+}
+
+.forgot-password-button:hover {
+    opacity: .88;
+}
+
+.forgot-password-meta {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: .85rem;
+}
+
+.forgot-password-meta a {
+    color: #16181d;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-password-meta a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+    .forgot-password-page {
+        padding: 20px;
+    }
+
+    .forgot-password-card {
+        padding: 36px 24px;
+    }
+}
+
+.login-verification-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: #f4f5f7;
+}
+
+.login-verification-card {
+    width: 100%;
+    max-width: 400px;
+    padding: 44px 40px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border-radius: 16px;
+
+    box-shadow:
+        0 1px 2px rgba(16, 24, 40, .05),
+        0 24px 48px -12px rgba(16, 24, 40, .12);
+}
+
+.login-verification-mark {
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #16181d;
+    color: #ffffff;
+
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.login-verification-header h1 {
+    margin: 0 0 8px;
+
+    color: #16181d;
+
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -.02em;
+}
+
+.login-verification-header p {
+    margin: 0 0 28px;
+
+    color: #667085;
+
+    font-size: .93rem;
+    line-height: 1.6;
+}
+
+.login-verification-email {
+    color: #16181d;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+
+/* Error */
+
+.login-verification-error {
+    margin: -4px 0 16px;
+
+    padding: 11px 13px;
+
+    border-radius: 9px;
+
+    background: #fef3f2;
+    color: #d92d20;
+
+    font-size: .85rem;
+    line-height: 1.4;
+}
+
+
+/* Code input */
+
+.login-verification-field {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.login-verification-code-input {
+    width: 100%;
+
+    padding: 22px 14px 8px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d0d5dd;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #16181d;
+
+    font-size: 1.05rem;
+    font-weight: 600;
+
+    letter-spacing: .12em;
+
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+.login-verification-code-input:focus {
+    outline: none;
+
+    border-color: #16181d;
+
+    box-shadow:
+        0 0 0 3px rgba(22, 24, 29, .08);
+}
+
+.login-verification-field label {
+    position: absolute;
+
+    left: 14px;
+    top: 15px;
+
+    color: #98a2b3;
+
+    font-size: .95rem;
+
+    pointer-events: none;
+
+    transition: all .15s ease;
+}
+
+.login-verification-code-input:focus + label,
+.login-verification-code-input:not(:placeholder-shown) + label {
+    top: 7px;
+
+    color: #16181d;
+
+    font-size: .7rem;
+    font-weight: 600;
+
+    letter-spacing: .02em;
+
+    text-transform: uppercase;
+}
+
+.login-verification-code-input::placeholder {
+    color: transparent;
+}
+
+
+/* Verify button */
+
+.login-verification-button {
+    width: 100%;
+
+    margin-top: 6px;
+
+    padding: 13px;
+
+    border: 0;
+    border-radius: 10px;
+
+    background: #16181d;
+    color: #ffffff;
+
+    font-size: .95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        opacity .15s ease,
+        transform .1s ease;
+}
+
+.login-verification-button:hover {
+    opacity: .88;
+}
+
+.login-verification-button:active {
+    transform: scale(.99);
+}
+
+
+/* Expiry information */
+
+.login-verification-info {
+    margin: 18px 0 0;
+
+    color: #98a2b3;
+
+    text-align: center;
+
+    font-size: .8rem;
+    line-height: 1.5;
+}
+
+
+/* Resend */
+
+.login-verification-resend {
+    margin-top: 26px;
+
+    padding-top: 22px;
+
+    border-top: 1px solid #eaecf0;
+
+    text-align: center;
+}
+
+.login-verification-resend p {
+    margin: 0 0 9px;
+
+    color: #667085;
+
+    font-size: .85rem;
+}
+
+.login-verification-resend button {
+    padding: 0;
+
+    border: 0;
+
+    background: transparent;
+    color: #16181d;
+
+    font-size: .85rem;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.login-verification-resend button:hover {
+    text-decoration: underline;
+}
+
+
+/* Back to login */
+
+.login-verification-back {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 20px;
+
+    font-size: .85rem;
+}
+
+.login-verification-back a {
+    color: #667085;
+
+    font-weight: 600;
+
+    text-decoration: none;
+}
+
+.login-verification-back a:hover {
+    color: #16181d;
+    text-decoration: underline;
+}
+
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+    .login-verification-page {
+        padding: 20px;
+    }
+
+    .login-verification-card {
+        padding: 36px 24px;
+    }
+
 }

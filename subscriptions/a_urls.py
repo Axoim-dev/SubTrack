@@ -17,5 +17,7 @@ urlpatterns = [
     path("subscription/<uuid:subscription_id>/remove/", views.remove_subscription, name="remove_subscription"),
     path("subscription/<uuid:sub_id>/edit/", views.edit_subscription, name="edit_subscription"),
     path("verify/code", views.verify_code, name="verify_code"),
-    path("resend/code/", views.resend_email, name="resend_code")
+    path("resend/code/", views.resend_email, name="resend_code"),
+    path("forgot/password", views.forgot_password, name="forgot_password"),
+    path("verify/login", views.verify_login, name="verify_login")
 ]
