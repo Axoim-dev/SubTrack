@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import User, Subscription, GoogleAccount
 from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
@@ -286,8 +286,19 @@ def add_sub(request):
     )
 
 @login_required
-def remove_sub(request):
-    pass
+def remove_subscription(request, subscription_id):
+
+    if request.method == "POST":
+
+        subscription = get_object_or_404(
+            Subscription,
+            id=subscription_id,
+            user=request.user
+        )
+
+        subscription.delete()
+
+    return redirect("dashboard")
 
 @login_required(login_url="login")
 def delete_acc(request):
