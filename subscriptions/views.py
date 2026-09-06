@@ -248,7 +248,7 @@ def verify_code(request):
 
     if not email:
         return redirect("signup")
-    generate_code(email)
+    
 
     if request.method == "POST":
 
@@ -318,7 +318,7 @@ def verify_login(request):
     email = request.session.get("login_email")
     if not email:
         return redirect("login")
-    generate_code()
+    
     if request.method == "POST":
         code = request.POST.get("code", "").strip()
 
@@ -417,6 +417,7 @@ def signup(request):
         request.session["pending_signup_email"] = email
 
         # Generate and send verification code
+        generate_code(email)
         
 
         return redirect("verify_code")
@@ -461,6 +462,7 @@ def forgot_password(request):
             })
 
         request.session["login_email"] = email
+        generate_code()
         return redirect("verify_login")
     
     return render(request, "subscriptions/forgot_password.html")  
