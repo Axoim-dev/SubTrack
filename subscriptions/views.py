@@ -228,8 +228,7 @@ def generate_code(email):
     code = str(secrets.randbelow(1_000_000)).zfill(6)
 
     EmailVerificationCode.objects.filter(
-        email=email,
-        expires_at__gt=timezone.now()
+        email=email
     ).delete()
 
     EmailVerificationCode.objects.create(
@@ -284,12 +283,14 @@ def verify_code(request):
         password = request.session.get("signup_password")
         username = request.session.get("signup_username")
 
-        User.objects.create(
+        user = User.objects.create(
             name=name,
             username=username,
             email=email,
             password=make_password(password)
         )
+
+        login(request, user)
 
         # Delete used verification code
         verification.delete()
@@ -300,7 +301,7 @@ def verify_code(request):
         request.session.pop("signup_password", None)
         request.session.pop("signup_username", None)
 
-        return redirect("login")
+        return redirect("dashboard")
 
     return render(
         request,
