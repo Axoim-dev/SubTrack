@@ -462,7 +462,7 @@ def forgot_password(request):
             })
 
         request.session["login_email"] = email
-        generate_code()
+        generate_code(email)
         return redirect("verify_login")
     
     return render(request, "subscriptions/forgot_password.html")  
