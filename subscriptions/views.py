@@ -328,7 +328,7 @@ def edit_subscription(request, sub_id):
 
     return render(
         request,
-        "subscription/edit_sub.html",
+        "subscriptions/edit_sub.html",
         {
             "subscription": subscription
         }
