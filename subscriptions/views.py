@@ -300,6 +300,41 @@ def remove_subscription(request, subscription_id):
 
     return redirect("dashboard")
 
+@login_required
+def edit_subscription(request, sub_id):
+
+    subscription = get_object_or_404(
+        Subscription,
+        id=sub_id,
+        user=request.user
+    )
+
+    if request.method == "POST":
+
+        merchant = request.POST.get("merchant")
+        amount = request.POST.get("amount")
+        due_date = request.POST.get("date_due")
+        bill_period = request.POST.get("billing_period")
+        category = request.POST.get("category")
+
+        subscription.merchant = merchant.strip().capitalize()
+        subscription.amount = Decimal(amount)
+        subscription.date_due = due_date
+        subscription.billing_period = bill_period
+        subscription.category = category
+
+        subscription.save()
+
+        return redirect("dashboard")
+
+    return render(
+        request,
+        "edit_sub.html",
+        {
+            "subscription": subscription
+        }
+    )
+
 @login_required(login_url="login")
 def delete_acc(request):
     if not request.user.is_authenticated:

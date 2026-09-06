@@ -1808,3 +1808,172 @@ body {
     color: #16181d;
 }
 
+.edit-subscription-page {
+    min-height: 100vh;
+    background: #f4f5f7;
+    padding: 50px 40px 80px;
+}
+
+
+.edit-subscription-container {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+
+/* Header */
+
+.edit-subscription-header {
+    margin-bottom: 25px;
+}
+
+.edit-subscription-header .dashboard-label {
+    margin-bottom: 8px;
+}
+
+.edit-subscription-header h1 {
+    margin: 0;
+    color: #16181d;
+    font-size: 2rem;
+    letter-spacing: -.035em;
+}
+
+.edit-subscription-header > p:last-child {
+    margin: 8px 0 0;
+    color: #667085;
+    font-size: .9rem;
+}
+
+
+/* Card */
+
+.edit-subscription-card {
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #e4e7ec;
+    border-radius: 13px;
+}
+
+
+/* Form */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: #344054;
+    font-size: .82rem;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 8px;
+    background: #fff;
+    color: #16181d;
+    font-family: inherit;
+    font-size: .85rem;
+    outline: none;
+    box-sizing: border-box;
+    transition:
+        border-color .15s ease,
+        box-shadow .15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #98a2b3;
+    box-shadow: 0 0 0 3px rgba(152, 162, 179, .15);
+}
+
+
+/* Actions */
+
+.edit-subscription-actions {
+    margin-top: 30px;
+    padding-top: 22px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 1px solid #eaecf0;
+}
+
+.cancel-button,
+.save-button {
+    min-height: 42px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: .82rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.cancel-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #d0d5dd;
+    color: #344054;
+}
+
+.cancel-button:hover {
+    background: #f9fafb;
+}
+
+.save-button {
+    border: 1px solid #16181d;
+    background: #16181d;
+    color: #fff;
+    transition:
+        opacity .15s ease,
+        transform .15s ease;
+}
+
+.save-button:hover {
+    opacity: .88;
+    transform: translateY(-1px);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .edit-subscription-page {
+        padding: 35px 20px 60px;
+    }
+
+    .edit-subscription-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .edit-subscription-card {
+        padding: 22px;
+    }
+
+    .edit-subscription-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+        text-align: center;
+    }
+
+}

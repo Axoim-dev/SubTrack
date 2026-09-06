@@ -15,4 +15,5 @@ urlpatterns = [
     path("remove/gmail/", views.remove_gmail , name="remove_gmail"),
     path("settings", views.user_settings, name="settings"),
     path("subscription/<uuid:subscription_id>/remove/", views.remove_subscription, name="remove_subscription"),
+    path("subscription/<uuid:sub_id>/edit/", views.edit_subscription, name="edit_subscription"),
 ]

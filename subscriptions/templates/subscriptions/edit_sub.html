@@ -1,0 +1,224 @@
+{% extends 'subscriptions/main.html' %}
+
+{% block content %}
+
+<div class="edit-subscription-page">
+
+    <div class="edit-subscription-container">
+
+        <div class="edit-subscription-header">
+
+            <p class="dashboard-label">
+                SUBSCRIPTION
+            </p>
+
+            <h1>
+                Edit subscription
+            </h1>
+
+            <p>
+                Update the details of your subscription.
+            </p>
+
+        </div>
+
+
+        <div class="edit-subscription-card">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label for="merchant">
+                        Merchant
+                    </label>
+
+                    <input
+                        type="text"
+                        id="merchant"
+                        name="merchant"
+                        value="{{ subscription.merchant }}"
+                        maxlength="200"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="amount">
+                        Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        id="amount"
+                        name="amount"
+                        value="{{ subscription.amount }}"
+                        step="0.01"
+                        min="0"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="date_due">
+                        Next payment
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_due"
+                        name="date_due"
+                        value="{{ subscription.date_due|date:'Y-m-d' }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="billing_period">
+                        Billing period
+                    </label>
+
+                    <select
+                        id="billing_period"
+                        name="billing_period"
+                        required
+                    >
+
+                        <option
+                            value="weekly"
+                            {% if subscription.billing_period == "weekly" %}selected{% endif %}
+                        >
+                            Weekly
+                        </option>
+
+                        <option
+                            value="monthly"
+                            {% if subscription.billing_period == "monthly" %}selected{% endif %}
+                        >
+                            Monthly
+                        </option>
+
+                        <option
+                            value="yearly"
+                            {% if subscription.billing_period == "yearly" %}selected{% endif %}
+                        >
+                            Yearly
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="category">
+                        Category
+                    </label>
+
+                    <select
+                        id="category"
+                        name="category"
+                        required
+                    >
+
+                        <option
+                            value="entertainment"
+                            {% if subscription.category == "entertainment" %}selected{% endif %}
+                        >
+                            Entertainment
+                        </option>
+
+                        <option
+                            value="software"
+                            {% if subscription.category == "software" %}selected{% endif %}
+                        >
+                            Software
+                        </option>
+
+                        <option
+                            value="music"
+                            {% if subscription.category == "music" %}selected{% endif %}
+                        >
+                            Music
+                        </option>
+
+                        <option
+                            value="gaming"
+                            {% if subscription.category == "gaming" %}selected{% endif %}
+                        >
+                            Gaming
+                        </option>
+
+                        <option
+                            value="education"
+                            {% if subscription.category == "education" %}selected{% endif %}
+                        >
+                            Education
+                        </option>
+
+                        <option
+                            value="fitness"
+                            {% if subscription.category == "fitness" %}selected{% endif %}
+                        >
+                            Fitness
+                        </option>
+
+                        <option
+                            value="shopping"
+                            {% if subscription.category == "shopping" %}selected{% endif %}
+                        >
+                            Shopping
+                        </option>
+
+                        <option
+                            value="other"
+                            {% if subscription.category == "other" %}selected{% endif %}
+                        >
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="edit-subscription-actions">
+
+                    <a
+                        href="{% url 'home' %}"
+                        class="cancel-button"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="save-button"
+                    >
+                        Save changes
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
