@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import User, Subscription, GoogleAccount, EmailVerificationCode
+from .models import User, Subscription, GoogleAccount, EmailVerificationCode, PendingSignup
 from django.contrib.auth import authenticate, login, logout
 from decimal import Decimal
 from django.contrib.admin.models import LogEntry
@@ -244,7 +244,7 @@ def generate_code(email):
 
 def verify_code(request):
 
-    email = request.session.get("signup_email")
+    email = request.session.get("pending_signup_email")
 
     if not email:
         return redirect("signup")
@@ -279,27 +279,29 @@ def verify_code(request):
             )
 
         # Code is correct
-        name = request.session.get("signup_name")
-        password = request.session.get("signup_password")
-        username = request.session.get("signup_username")
+        pending = PendingSignup.objects.filter(email=email).first()
+        if not pending:
+            request.session.pop("pending_signup_email", None)
+            return redirect("signup")
+        name = pending.name
+        username = pending.username
+        password = pending.password
 
         user = User.objects.create(
             name=name,
             username=username,
             email=email,
-            password=make_password(password)
+            password=password
         )
 
         login(request, user)
 
         # Delete used verification code
         verification.delete()
+        pending.delete()
 
         # Remove temporary signup information
-        request.session.pop("signup_name", None)
-        request.session.pop("signup_email", None)
-        request.session.pop("signup_password", None)
-        request.session.pop("signup_username", None)
+        request.session.pop("pending_signup_email", None)
 
         return redirect("dashboard")
 
@@ -312,7 +314,7 @@ def verify_code(request):
     )
 
 def resend_email(request):
-    email = request.session.get("signup_email")
+    email = request.session.get("pending_signup_email")
 
     if not email:
         return redirect("signup")
@@ -347,17 +349,37 @@ def signup(request):
                 {"error": "Please fill in all fields."}
             )
 
-        request.session["signup_name"] = name
-        request.session["signup_email"] = email
-        request.session["signup_password"] = password
-        request.session["signup_username"] = username
+        PendingSignup.objects.filter(
+            expires_at__lte=timezone.now()
+        ).delete()
+
+        # Check pending username
+        if PendingSignup.objects.filter(username=username).exclude(email=email).exists():
+            return render(
+                request,
+                "subscriptions/signup.html",
+                {"error": "Username is currently being used for another signup."}
+            )
+
+
+        PendingSignup.objects.update_or_create(
+            email=email,
+            defaults={
+                "name": name,
+                "username": username,
+                "password": make_password(password),
+                "expires_at": timezone.now() + timedelta(minutes=15),
+            }
+        )
+
+        request.session["pending_signup_email"] = email
 
         # Generate and send verification code
         generate_code(email)
 
         return redirect("verify_code")
 
-    return render(request, "subscriptions/signup.html", )
+    return render(request, "subscriptions/signup.html")
 
 
 def login_view(request):
