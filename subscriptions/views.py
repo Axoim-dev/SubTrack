@@ -227,6 +227,10 @@ If you didn't request this code, you can safely ignore this email.
 def generate_code(email):
     code = str(secrets.randbelow(1_000_000)).zfill(6)
 
+    EmailVerificationCode.objects.filter(
+        email=email,
+        expires_at__gt=timezone.now()
+    ).delete()
 
     EmailVerificationCode.objects.create(
         email=email,
@@ -237,6 +241,7 @@ def generate_code(email):
     create_email(code, email)
 
     return code
+
 
 def verify_code(request):
 
@@ -257,7 +262,7 @@ def verify_code(request):
         if not verification:
             return render(
                 request,
-                "code.html",
+                "subscriptions/code.html",
                 {
                     "email": email,
                     "error": "Incorrect verification code."
@@ -267,7 +272,7 @@ def verify_code(request):
         if timezone.now() > verification.expires_at:
             return render(
                 request,
-                "code.html",
+                "subscriptions/code.html",
                 {
                     "email": email,
                     "error": "This verification code has expired."
@@ -277,9 +282,11 @@ def verify_code(request):
         # Code is correct
         name = request.session.get("signup_name")
         password = request.session.get("signup_password")
+        username = request.session.get("signup_username")
 
         User.objects.create(
             name=name,
+            username=username,
             email=email,
             password=make_password(password)
         )
@@ -291,6 +298,7 @@ def verify_code(request):
         request.session.pop("signup_name", None)
         request.session.pop("signup_email", None)
         request.session.pop("signup_password", None)
+        request.session.pop("signup_username", None)
 
         return redirect("login")
 
@@ -302,12 +310,22 @@ def verify_code(request):
         }
     )
 
+def resend_email(request):
+    email = request.session.get("signup_email")
+
+    if not email:
+        return redirect("signup")
+
+    generate_code(email)
+
+    return redirect("verify_code")
+
 def signup(request):
     if request.method == "POST":
-        email = request.POST["email"]
-        name = request.POST["name"]
-        username = request.POST["username"]
-        password = request.POST["password"]
+        email = request.POST.get("email", "").strip()
+        name = request.POST.get("name", "").strip()
+        username = request.POST.get("username", "").strip()
+        password = request.POST.get("password", "")
     
         if User.objects.filter(username=username).exists():
             return render(
@@ -321,17 +339,23 @@ def signup(request):
                 "subscriptions/signup.html",
                 {"error":"Email already exists"}
             )
+        if not email or not name or not username or not password:
+            return render(
+                request,
+                "subscriptions/signup.html",
+                {"error": "Please fill in all fields."}
+            )
 
         request.session["signup_name"] = name
         request.session["signup_email"] = email
         request.session["signup_password"] = password
+        request.session["signup_username"] = username
 
         # Generate and send verification code
         generate_code(email)
 
         return redirect("verify_code")
 
-        return redirect("dashboard")
     return render(request, "subscriptions/signup.html", )
 
 
