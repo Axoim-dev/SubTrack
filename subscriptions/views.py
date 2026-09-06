@@ -213,7 +213,7 @@ If you didn't request this code, you can safely ignore this email.
     email_message = EmailMultiAlternatives(
         subject=subject,
         body=text_content,
-        from_email=settings.EMAIL_HOST_USER,
+        from_email="no-reply@subtrack.local",
         to=[email],
     )
 
